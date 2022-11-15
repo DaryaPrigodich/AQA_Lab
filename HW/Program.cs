@@ -7,42 +7,42 @@ Console.WriteLine("Введите сумму обмена:");
 float sum = Convert.ToSingle(Console.ReadLine());
 
 Console.WriteLine("Введите валюту 1:");
-// старайся использовать более понятные названия переменных, например val1 -> userCurrency, val2 -> exchangeCurrency
-string val1 = Console.ReadLine();
+string userCurrency = Console.ReadLine();
 
 Console.WriteLine("Введите валюту 2:");
-string val2 = Console.ReadLine();
+string exchangeCurrency = Console.ReadLine();
 
-if (val1 == "USD" && val2 == "EUR") // старайся не хардкодить строки, используй переменные: var usdCurrency = "USD" ...
+var usdCurrency = "USD";
+var eurCurrecny = "EUR";
+var zlCurrency = "ZL";
+
+if (userCurrency == usdCurrency && exchangeCurrency == eurCurrecny) 
 {
-    float a = sum * 0.96f; // запрети себе называть перменную a, b, c ... , имя переменной должно говорить о ее применении
-    Console.WriteLine($"{a} EUR");
+    float sumExchange = sum * 0.96f;
+    Console.WriteLine($"{sumExchange} EUR");
 }
-else if (val1 == "USD" && val2 == "ZL") 
+else if (userCurrency == usdCurrency && exchangeCurrency == zlCurrency) 
 {
-    float a = sum * 4.88f;
-    Console.WriteLine($"{a} ZL");
+    float sumExchange = sum * 4.88f;
+    Console.WriteLine($"{sumExchange} ZL");
 }
-else if (val1 == "EUR" && val2 == "USD") 
+else if (userCurrency == eurCurrecny && exchangeCurrency == usdCurrency) 
 {
-    float a = sum * 1.04f;
-    Console.WriteLine($"{a} USD");
+    float sumExchange = sum * 1.04f;
+    Console.WriteLine($"{sumExchange} USD");
 }
-else if (val1 == "EUR" && val2 == "ZL") 
+else if (userCurrency == eurCurrecny && exchangeCurrency == zlCurrency) 
 {
-    float a = sum * 4.68f;
-    Console.WriteLine($"{a} ZL");
+    float sumExchange = sum * 4.68f;
+    Console.WriteLine($"{sumExchange} ZL");
 }
-else if (val1 == "ZL" && val2 == "USD")
+else if (userCurrency == zlCurrency && exchangeCurrency == usdCurrency)
 {
-    float a = sum * 0.22f;
-    Console.WriteLine($"{a} USD");
+    float sumExchange = sum * 0.22f;
+    Console.WriteLine($"{sumExchange} USD");
 }
 else 
 {
-    float a = sum * 0.21f;
-    Console.WriteLine($"{a} EUR");
+    float sumExchange = sum * 0.21f;
+    Console.WriteLine($"{sumExchange} EUR");
 }
-
-
-
