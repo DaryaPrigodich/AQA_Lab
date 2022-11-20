@@ -1,48 +1,52 @@
-﻿//Конвертер USD  / EUR / ZL 
-//Конвертер должен уметь получать кол-во денег, конвертируемую валюту и потом валюту, в  которую происходит конвертация
-//В итоге пользователь должен получить выведенную на консоль сумму в валюте, которая была указана второй 
-
-
-Console.WriteLine("Введите сумму обмена:");
-float sum = Convert.ToSingle(Console.ReadLine());
-
-Console.WriteLine("Введите валюту 1:");
-string userCurrency = Console.ReadLine();
-
-Console.WriteLine("Введите валюту 2:");
-string exchangeCurrency = Console.ReadLine();
-
-var usdCurrency = "USD";
-var eurCurrecny = "EUR";
-var zlCurrency = "ZL";
-
-if (userCurrency == usdCurrency && exchangeCurrency == eurCurrecny) 
+﻿partial class Program
 {
-    float sumExchange = sum * 0.96f;
-    Console.WriteLine($"{sumExchange} EUR");
+    static void Main(string[] args)
+    {
+        Conv usdZl = new Conv(1000M, "USD","ZL");
+    }
 }
-else if (userCurrency == usdCurrency && exchangeCurrency == zlCurrency) 
+public class Conv
 {
-    float sumExchange = sum * 4.88f;
-    Console.WriteLine($"{sumExchange} ZL");
-}
-else if (userCurrency == eurCurrecny && exchangeCurrency == usdCurrency) 
-{
-    float sumExchange = sum * 1.04f;
-    Console.WriteLine($"{sumExchange} USD");
-}
-else if (userCurrency == eurCurrecny && exchangeCurrency == zlCurrency) 
-{
-    float sumExchange = sum * 4.68f;
-    Console.WriteLine($"{sumExchange} ZL");
-}
-else if (userCurrency == zlCurrency && exchangeCurrency == usdCurrency)
-{
-    float sumExchange = sum * 0.22f;
-    Console.WriteLine($"{sumExchange} USD");
-}
-else 
-{
-    float sumExchange = sum * 0.21f;
-    Console.WriteLine($"{sumExchange} EUR");
+    public decimal sumCurrency;
+    public string userCurrency;
+    public string exchangeCurrency;
+    
+    string Usd = "USD";
+    string Eur = "EUR";
+    string Zl = "ZL";
+
+    public Conv(decimal sumCurrency, string userCurrency, string exchangeCurrency)
+    {
+        this.sumCurrency = sumCurrency;
+        this.userCurrency = userCurrency;
+        this.exchangeCurrency = exchangeCurrency;
+
+        decimal result = Conver();
+        Console.WriteLine(result);
+    }
+    public decimal Conver()
+    {
+        decimal usdEur = 0.96M;
+        decimal usdZl = 4.88M;
+        decimal eurUsd = 1.04M;
+        decimal eurZl = 4.68M;
+        decimal zlUsd = 0.22M;
+        decimal zlEur = 0.21M;
+        
+        switch (userCurrency, exchangeCurrency)
+        {
+            case ("USD","EUR"): return sumCurrency * usdEur;
+                break;
+            case ("USD","ZL"): return sumCurrency * usdZl;
+                break;
+            case ("EUR","USD"): return sumCurrency * eurUsd;
+                break;
+            case ("EUR","ZL"): return sumCurrency * eurZl;
+                break;
+            case ("ZL","USD"): return sumCurrency * zlUsd;
+                break;
+            default: return sumCurrency * zlEur;
+                break;
+        }
+    }
 }
