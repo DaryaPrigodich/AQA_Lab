@@ -4,16 +4,16 @@
     {
         Conv usdZl = new Conv(1000M, "USD","ZL");
     }
-}
+}// на следующей строке пустой строки не хватает
 public class Conv
 {
     public decimal sumCurrency;
     public string userCurrency;
     public string exchangeCurrency;
     
-    string Usd = "USD";
-    string Eur = "EUR";
-    string Zl = "ZL";
+    string Usd = "USD"; // переменные внутри класса без указания модификатора доступа по дефолту - private 
+    string Eur = "EUR"; // пускай люди тратят меньше усилий на понимание нансов твоего кода - используй модификаторы доступа
+    string Zl = "ZL"; // в нашем случае: private string Eur = "EUR"; ...
 
     public Conv(decimal sumCurrency, string userCurrency, string exchangeCurrency)
     {
@@ -22,8 +22,8 @@ public class Conv
         this.exchangeCurrency = exchangeCurrency;
 
         decimal result = Conver();
-        Console.WriteLine(result);
-    }
+        Console.WriteLine(result); // просил написать метод без вывода на консоль))) 
+    } // на следующей строке не хватает пустой линии
     public decimal Conver()
     {
         decimal usdEur = 0.96M;
@@ -35,7 +35,7 @@ public class Conv
         
         switch (userCurrency, exchangeCurrency)
         {
-            case ("USD","EUR"): return sumCurrency * usdEur;
+            case ("USD","EUR"): return sumCurrency * usdEur; // переставай использовать строковые константы. у тебя есть переменные Usd Eur Zl с этими значениями 
                 break;
             case ("USD","ZL"): return sumCurrency * usdZl;
                 break;
