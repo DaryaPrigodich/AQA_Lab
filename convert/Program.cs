@@ -2,6 +2,10 @@
 
 public class Program
 {
-   Converter Convert = new  Converter(0.22M,0.46M,0.33M,0.11M,0.66M,0.44M);
-   
+   public static void Main(string[] args)
+   {
+      var converter = new Converter(0.22M,4.6M,0.33M,0.11M,0.66M,0.44M);
+      var result = converter.Convert(1000M, Currencies.Usd, Currencies.Zl);
+      Console.WriteLine(result);
+   }
 }

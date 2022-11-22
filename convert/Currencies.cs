@@ -2,7 +2,7 @@
 
 public class Currencies
 {
-    public const string USD = "USD";
-    public const string EUR = "EUR";
-    public const string ZL = "ZL";
+    public const string Usd = "USD";
+    public const string Eur = "EUR";
+    public const string Zl = "ZL";
 }
