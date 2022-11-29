@@ -4,9 +4,9 @@ using HW2.Models;
 
 namespace HW2.Factories;
 
-public class PersonFactory : BaseInfo
+public class PersonFactory
 {
-    public override List<Employee> GetEmployees(int employeeCount)
+    public List<Employee> GetEmployees(int employeeCount)
     {
         return new Faker<Employee>()
             .RuleFor(u => u.FirstName, f => f.Name.FirstName())
@@ -20,7 +20,7 @@ public class PersonFactory : BaseInfo
             .RuleFor(u => u.CompanyCity, f => f.Address.StreetName())
             .Generate(employeeCount);
     }
-    
+
     public List<Candidate> GetCandidates(int candidateCount)
     {
         return new Faker<Candidate>()
