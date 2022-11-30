@@ -1,39 +1,24 @@
 ﻿using Bogus;
-using ConsoleApp1.Models;
+using HW2.Entities;
 using HW2.Factories;
 
-namespace HW2
+namespace HW2;
+
+public class Program
 {
-    class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            /*var employees = new PersonFactory().GetEmployee(4);
-            
-            employees.ForEach(u =>
-            {
-                /*Console.WriteLine(u.FullName);#1#
-            });*/
+        var faker = new Faker();
+        var userFactory = new UserFactory();
+        
+        var employees = userFactory.GetEmployees(faker.Random.Int(1, 5));
+        var candidates = userFactory.GetCandidates(faker.Random.Int(1, 5));
+        employees.ForEach(e => { Console.WriteLine($"Employee - {e.FullName}"); });
+        candidates.ForEach(c => { Console.WriteLine($"Candidate - {c.FullName}"); });
 
-           
-            var person = new PersonFactory();
-
-            var employees = person.GetEmployees(new Faker().Random.Int(1,5));
-            var clients = person.GetCandidates(new Faker().Random.Int(1,5));
-            
-            employees.ForEach(u =>
-                {
-                    Console.WriteLine(u.FullName);
-                });
-            Console.WriteLine();
-            
-            clients.ForEach(u =>
-            {
-                Console.WriteLine(u.FullName);
-            });
-            /*var people = new UserFactory<Employee>();
-            var a = people.User();*/
-        }
+        IIntroducer? employee = userFactory.GetUser<Employee>();
+        IIntroducer? candidate = userFactory.GetUser<Candidate>();
+        employee?.PrintPersonInfo();
+        candidate?.PrintPersonInfo();
     }
 }
-
