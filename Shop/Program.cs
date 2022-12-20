@@ -43,8 +43,8 @@ class Program
 
                     if (string.IsNullOrEmpty(nameOfBuyer)) Console.WriteLine("Попробуйте еще раз.");
                     else SummSoppingCart(nameOfBuyer, listBuyers);
-                    
-                    UserChoice(out restartLoop); 
+
+                    UserChoice(out restartLoop);
                     break;
                 case 3:
                     Console.WriteLine("Введите имя покупателя:");
@@ -52,19 +52,22 @@ class Program
 
                     Console.WriteLine("Введите id покупателя:");
                     var idNewUser = Console.ReadLine();
-                    
+
                     Console.WriteLine("Введите возраст покупателя:");
                     var ageNewUser = int.Parse(Console.ReadLine());
 
-                    if (nameNewUser != null && idNewUser != null && ageNewUser != null)
+                    if (string.IsNullOrEmpty(nameNewUser)|| string.IsNullOrEmpty(idNewUser) || ageNewUser == null)
+                    {
+                        Console.WriteLine("Заполните поля корректными данными. Попробуйте еще раз.");
+                    }
+                    else
                     {
                         var newUser = new User()
-                                { PassportId = idNewUser, Name = nameNewUser, Age = ageNewUser, Products = null };
+                            { PassportId = idNewUser, Name = nameNewUser, Age = ageNewUser, Products = null };
 
-                            VarifyNewBuyerById(idNewUser, newUser, listBuyers);
+                        VarifyNewBuyerById(idNewUser, newUser, listBuyers);
                     }
-                    else Console.WriteLine("Попробуйте еще раз.");
-                    
+
                     UserChoice(out restartLoop);
                     break;
                 case 4:
@@ -104,7 +107,7 @@ class Program
                         else Console.WriteLine("Покупатель не зарегестрирован!");
                     }
                     else Console.WriteLine("Попробуйте еще раз.");
-                    
+
                     UserChoice(out restartLoop);
                     break;
             }
