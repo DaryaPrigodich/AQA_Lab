@@ -1,5 +1,4 @@
-﻿using System.Net.WebSockets;
-using Shop;
+﻿using Shop;
 using Random = System.Random;
 
 class Program
@@ -15,7 +14,7 @@ class Program
 
         while (restartLoop)
         {
-            Console.WriteLine("Введите от 0 до 5, чтобы:");
+            Console.WriteLine("Введите число от 0 до 5, чтобы:");
             Console.WriteLine("0 - посмотреть имена всех покупателей;");
             Console.WriteLine("1 - посмотреть всех покупателей и их корзины;");
             Console.WriteLine("2 - узнать итоговую сумму всех товаров в корзине определенного покупателя;");
@@ -23,61 +22,74 @@ class Program
             Console.WriteLine("4 - добавить товар в корзину;");
             Console.WriteLine("5 - удалить товар из корзины;");
 
-            var userChoice = int.Parse(Console.ReadLine());
+            int userChoice;
+            var isUserChoise = int.TryParse(Console.ReadLine(), out userChoice) && userChoice >= 0 && userChoice <= 5;
 
-            switch (userChoice)
+            if (isUserChoise == false)
             {
-                case 0:
-                    ListOfBuyerNames(listBuyers);
+                Console.WriteLine("Попробуйте еще раз.");
+            }
+            else
+            {
+                switch (userChoice)
+                {
+                    case 0:
+                        ListOfBuyerNames(listBuyers);
 
-                    UserChoice(out restartLoop);
-                    break;
-                case 1:
-                    ShoppingCarts(listBuyers);
+                        UserChoice(out restartLoop);
+                        break;
+                    case 1:
+                        ShoppingCarts(listBuyers);
 
-                    UserChoice(out restartLoop);
-                    break;
-                case 2:
-                    Console.WriteLine("Введите имя покупателя:");
-                    var nameOfBuyer = Console.ReadLine();
+                        UserChoice(out restartLoop);
+                        break;
+                    case 2:
+                        Console.WriteLine("Введите имя покупателя:");
+                        var nameOfBuyer = Console.ReadLine();
 
-                    if (string.IsNullOrEmpty(nameOfBuyer)) Console.WriteLine("Попробуйте еще раз.");
-                    else SummSoppingCart(nameOfBuyer, listBuyers);
+                        if (string.IsNullOrEmpty(nameOfBuyer)) Console.WriteLine("Попробуйте еще раз.");
+                        else SummSoppingCart(nameOfBuyer, listBuyers);
 
-                    UserChoice(out restartLoop);
-                    break;
-                case 3:
-                    Console.WriteLine("Введите имя покупателя:");
-                    var nameNewUser = Console.ReadLine();
+                        UserChoice(out restartLoop);
+                        break;
+                    case 3:
+                        Console.WriteLine("Введите имя покупателя:");
+                        var nameNewUser = Console.ReadLine();
 
-                    Console.WriteLine("Введите id покупателя:");
-                    var idNewUser = Console.ReadLine();
+                        Console.WriteLine("Введите id покупателя:");
+                        var idNewUser = Console.ReadLine();
 
-                    Console.WriteLine("Введите возраст покупателя:");
-                    var ageNewUser = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Введите возраст покупателя:");
+                        int ageNewUser;
+                        var isAge = int.TryParse(Console.ReadLine(), out ageNewUser) && ageNewUser > 7 &&
+                                    ageNewUser < 100;
 
-                    if (string.IsNullOrEmpty(nameNewUser)|| string.IsNullOrEmpty(idNewUser) || ageNewUser == null)
-                    {
-                        Console.WriteLine("Заполните поля корректными данными. Попробуйте еще раз.");
-                    }
-                    else
-                    {
-                        var newUser = new User()
-                            { PassportId = idNewUser, Name = nameNewUser, Age = ageNewUser, Products = null };
-
-                        VarifyNewBuyerById(idNewUser, newUser, listBuyers);
-                    }
-
-                    UserChoice(out restartLoop);
-                    break;
-                case 4:
-                    Console.WriteLine("Введите имя пользователя кому хотите добавить товар:");
-                    chosenBuyer = Console.ReadLine();
-                    selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
-                    if (chosenBuyer != null)
-                    {
-                        if (listBuyers.Any(s => s.Name == chosenBuyer))
+                        if (string.IsNullOrEmpty(nameNewUser) || string.IsNullOrEmpty(idNewUser) || isAge == false)
                         {
+                            Console.WriteLine("Заполните поля корректными данными. Попробуйте еще раз.");
+                        }
+                        else
+                        {
+                            var newUser = new User()
+                                { PassportId = idNewUser, Name = nameNewUser, Age = ageNewUser, Products = null };
+
+                            VarifyNewBuyerById(idNewUser, newUser, listBuyers);
+                        }
+
+                        UserChoice(out restartLoop);
+                        break;
+                    case 4:
+                        Console.WriteLine("Введите имя пользователя кому хотите добавить товар:");
+                        chosenBuyer = Console.ReadLine();
+
+                        if (string.IsNullOrEmpty(chosenBuyer))
+                        {
+                            Console.WriteLine("Попробуйте еще раз.");
+                        }
+                        else if (listBuyers.Any(s => s.Name == chosenBuyer))
+                        {
+                            selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
+
                             string productName;
                             Product newProduct;
                             AddNewProduct(out productName, out newProduct);
@@ -85,31 +97,31 @@ class Program
                             VarifyAgeForAlcohol(productName, newProduct, selectedBuyer, listBuyers);
                         }
                         else Console.WriteLine("Покупатель не зарегестрирован!");
-                    }
-                    else Console.WriteLine("Попробуйте еще раз.");
 
-                    UserChoice(out restartLoop);
-                    break;
-                case 5:
-                    Console.WriteLine("Введите имя пользователя у кого хотите удалить товар:");
-                    chosenBuyer = Console.ReadLine();
-                    selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
+                        UserChoice(out restartLoop);
+                        break;
+                    case 5:
+                        Console.WriteLine("Введите имя пользователя у кого хотите удалить товар:");
+                        chosenBuyer = Console.ReadLine();
 
-                    if (chosenBuyer != null)
-                    {
-                        if (listBuyers.Any(s => s.Name == chosenBuyer))
+                        if (string.IsNullOrEmpty(chosenBuyer))
                         {
+                            Console.WriteLine("Попробуйте еще раз.");
+                        }
+                        else if (listBuyers.Any(s => s.Name == chosenBuyer))
+                        {
+                            selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
+
                             Console.WriteLine("Введите имя товара:");
                             var deletedProductName = Console.ReadLine();
 
                             RemoveProductByName(selectedBuyer, deletedProductName);
                         }
                         else Console.WriteLine("Покупатель не зарегестрирован!");
-                    }
-                    else Console.WriteLine("Попробуйте еще раз.");
 
-                    UserChoice(out restartLoop);
-                    break;
+                        UserChoice(out restartLoop);
+                        break;
+                }
             }
         }
     }
@@ -118,6 +130,7 @@ class Program
     {
         Console.WriteLine("Вернуться в главное меню? Y/N");
         var choice = Console.ReadLine();
+       
         if (choice == "Y")
         {
             restartLoop = true;
@@ -173,10 +186,13 @@ class Program
     {
         Console.WriteLine("Введите id товара:");
         var productId = Console.ReadLine();
+        
         Console.WriteLine("Введите имя товара:");
         productName = Console.ReadLine();
+        
         Console.WriteLine("Введите цену товара:");
         var productPrice = int.Parse(Console.ReadLine());
+        
         Console.WriteLine("Введите описание товара:");
         var productCategory = Console.ReadLine();
 
