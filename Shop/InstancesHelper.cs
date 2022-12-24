@@ -17,28 +17,28 @@ public static class InstancesHelper
         isUserChoice = int.TryParse(writtenUserChoice, out userChoice) && userChoice is >= 0 and <= 5;
     }
     
-    public static void VerifyExistChosenUser(List<User> listBuyers, string nameOfBuyer, out bool existingBuyer)
+    public static void VerifyExistChosenBuyer(List<User> listBuyers, string nameOfBuyer, out bool existingBuyer)
     {
         existingBuyer = listBuyers.Exists(buyer => buyer.Name == nameOfBuyer);
     }
-    
-    public static void VerifyCorrectNewBuyerAge(out bool isAge, out int ageNewUser)
+
+    private static void VerifyCorrectNewBuyerAge(out bool isAge, out int ageNewUser)
     {
         var writtenUserAge = Console.ReadLine();
         isAge = int.TryParse(writtenUserAge, out ageNewUser) && ageNewUser is > MinUserAge and < MaxUserAge;
     }
-    
-    public static void GetFirstMatchingBuyerByName(List<User> listBuyers, string chosenBuyer, out User selectedBuyer)
+
+    private static void GetFirstMatchingBuyerByName(List<User> listBuyers, string chosenBuyer, out User selectedBuyer)
     {
         selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
     }
-    
-    public static void GetSumOfBuyerCart(User selectedBuyer, out decimal selectedBuyerCartSum)
+
+    private static void GetSumOfBuyerCart(User selectedBuyer, out decimal selectedBuyerCartSum)
     {
         selectedBuyerCartSum = selectedBuyer.Products.Sum(product => product.ProductPrice);
     }
 
-    public static void CreateNewProduct(out Product newProduct, string productId, string productName, decimal productPrice, string productCategory)
+    private static void CreateNewProduct(out Product newProduct, string productId, string productName, decimal productPrice, string productCategory)
     {
         newProduct = new Product()
         {
@@ -47,23 +47,151 @@ public static class InstancesHelper
         };
     }
 
-    public static void CreateNewUser(out User newUser, string idNewUser, string nameNewUser,int ageNewUser)
+    private static void CreateNewUser(out User newUser, string idNewUser, string nameNewUser,int ageNewUser)
     {
         newUser = new User()
             { PassportId = idNewUser, Name = nameNewUser, Age = ageNewUser, Products = null };
     }
-    public static void RemoveProductFromBuyerCart(User selectedBuyer, string deletedProductName)
+
+    private static void RemoveProductFromBuyerCart(User selectedBuyer, string deletedProductName)
     {
         selectedBuyer.Products.RemoveAll(product => product.ProductName == deletedProductName);
     }
 
-    public static void AddNewProductToBuyer(Product newProduct, User selectedBuyer)
+    private static void AddNewProductToBuyer(Product newProduct, User selectedBuyer)
     {
         selectedBuyer.Products.Add(newProduct);
     }
 
-    public static void AddNewUserToList(User newUser, List<User> listBuyers)
+    private static void AddNewUser(User newUser, List<User> listBuyers)
     {
         listBuyers.Add(newUser);
+    }
+
+    private static void AddNewProduct(out string productName, out Product newProduct)
+    {
+        ConsoleRepresentation.PrintNameOfProduct();
+        productName = Console.ReadLine();
+
+        ConsoleRepresentation.PrintIdOfProduct();
+        var productId = Console.ReadLine();
+
+        ConsoleRepresentation.PrintPriceOfProduct();
+        var productPrice = int.Parse(Console.ReadLine());
+
+        ConsoleRepresentation.PrintDescriptionOfProduct();
+        var productCategory = Console.ReadLine();
+
+        CreateNewProduct(out newProduct, productId, productName, productPrice, productCategory);
+    }
+
+    private static void RemoveProductByName(User selectedBuyer, string deletedProductName)
+    {
+        if (selectedBuyer.Products.Any(s => s.ProductName == deletedProductName))
+        {
+            RemoveProductFromBuyerCart(selectedBuyer, deletedProductName);
+
+            ConsoleRepresentation.PrintProductRemoveConfirmation();
+        }
+        else
+        {
+            ConsoleRepresentation.PrintProductAbsence();
+        }
+    }
+    
+    public static void CountSumSoppingCart(List<User> listBuyers, string chosenBuyer)
+    {
+        GetFirstMatchingBuyerByName(listBuyers, chosenBuyer, out var selectedBuyer);
+        
+        GetSumOfBuyerCart(selectedBuyer, out var selectedBuyerCartSum);
+        
+        ConsoleRepresentation.PrintSumSoppingCart(selectedBuyer, selectedBuyerCartSum);
+    }
+    
+    public static void AddNewUserToList(List<User> listBuyers)
+    {
+        ConsoleRepresentation.PrintNameOfBuyer();
+        var nameNewUser = Console.ReadLine();
+
+        ConsoleRepresentation.PrintIdOfBuyer();
+        var idNewUser = Console.ReadLine();
+
+        ConsoleRepresentation.PrintAgeOfBuyer();
+                       
+        VerifyCorrectNewBuyerAge(out var isAge, out var ageNewUser);
+
+        if (string.IsNullOrEmpty(nameNewUser) || string.IsNullOrEmpty(idNewUser) || isAge == false)
+        {
+            ConsoleRepresentation.PrintTextForRepeating();
+        }
+        else
+        {
+            CreateNewUser(out var newUser, idNewUser, nameNewUser, ageNewUser);
+
+            if (ConsoleRepresentation.VerifyNewBuyerById(idNewUser, listBuyers))
+            {
+                ConsoleRepresentation.PrintCancelAddingUser();
+            }
+            else
+            {
+                AddNewUser(newUser, listBuyers);
+
+                ConsoleRepresentation.PrintAddingUser();
+            }
+        }
+    }
+
+    public static void AddCreatedProductToBuyerCart(List<User> listBuyers)
+    {
+        ConsoleRepresentation.PrintNameOfBuyer();
+        var chosenBuyer = Console.ReadLine();
+
+        if (string.IsNullOrEmpty(chosenBuyer))
+        {
+            ConsoleRepresentation.PrintTextForRepeating();
+        }
+        else if (listBuyers.Any(s => s.Name == chosenBuyer))
+        {
+            GetFirstMatchingBuyerByName(listBuyers, chosenBuyer, out var selectedBuyer);
+
+            AddNewProduct(out var productName, out var newProduct);
+
+            if (ConsoleRepresentation.VerifyAgeForAlcohol(productName, listBuyers))
+            {
+                AddNewProductToBuyer(newProduct, selectedBuyer);
+
+                ConsoleRepresentation.PrintProductAddConfirmation();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+
+                ConsoleRepresentation.PrintAgeLimitForAlcohol();
+
+                Console.ResetColor();
+            }
+        }
+        else ConsoleRepresentation.PrintUnregisteredBuyer();
+    }
+
+    public static void RemoveChosenProductFromBuyerCart(List<User> listBuyers)
+    {
+        ConsoleRepresentation.PrintNameOfBuyer();
+        var chosenBuyer = Console.ReadLine();
+
+        if (string.IsNullOrEmpty(chosenBuyer))
+        {
+            ConsoleRepresentation.PrintTextForRepeating();
+        }
+        else if (listBuyers.Any(s => s.Name == chosenBuyer))
+        {
+            GetFirstMatchingBuyerByName(listBuyers, chosenBuyer, out var selectedBuyer);
+
+            ConsoleRepresentation.PrintNameOfProduct();
+            var deletedProductName = Console.ReadLine();
+
+            RemoveProductByName(selectedBuyer, deletedProductName);
+        }
+        else ConsoleRepresentation.PrintUnregisteredBuyer();
     }
 }

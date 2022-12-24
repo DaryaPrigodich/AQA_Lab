@@ -3,7 +3,7 @@ namespace Shop;
 
 public class Factory
 {
-    public int ProductCount { get; set; }
+    private int ProductCount { get; set; }
 
     public Factory(int productCount)
     {
@@ -20,7 +20,7 @@ public class Factory
             .Generate(userCount);
     }
 
-    public List<Product> GetProducts(int productCount)
+    private List<Product> GetProducts(int productCount)
     {
         return new Faker<Product>()
             .RuleFor(u => u.ProductId, f => f.Random.AlphaNumeric(2))
