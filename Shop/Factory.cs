@@ -1,5 +1,4 @@
 ﻿using Bogus;
-
 namespace Shop;
 
 public class Factory

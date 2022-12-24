@@ -1,233 +1,216 @@
 ﻿using Shop;
-using Random = System.Random;
 
 class Program
 {
     public static void Main(string[] args)
     {
-        var random = new Random();
-        var listBuyers = new Factory(random.Next(3, 5)).GetUsers(random.Next(1, 4));
+        InstancesHelper.CreateListOfBuyers(out var listBuyers);
 
         string chosenBuyer;
         User selectedBuyer;
-        bool restartLoop = true;
+        var restartLoop = true;
 
         while (restartLoop)
         {
-            Console.WriteLine("Введите число от 0 до 5, чтобы:");
-            Console.WriteLine("0 - посмотреть имена всех покупателей;");
-            Console.WriteLine("1 - посмотреть всех покупателей и их корзины;");
-            Console.WriteLine("2 - узнать итоговую сумму всех товаров в корзине определенного покупателя;");
-            Console.WriteLine("3 - добавить нового покупателя;");
-            Console.WriteLine("4 - добавить товар в корзину;");
-            Console.WriteLine("5 - удалить товар из корзины;");
+            ConsoleRepresentation.PrintInformationForSelection();
 
-            int userChoice;
-            var isUserChoise = int.TryParse(Console.ReadLine(), out userChoice) && userChoice >= 0 && userChoice <= 5;
+            InstancesHelper.VerifyCorrectUserChoice(out var isUserChoice, out var userChoice);
 
-            if (isUserChoise == false)
+            if (isUserChoice == false)
             {
-                Console.WriteLine("Попробуйте еще раз.");
+                ConsoleRepresentation.PrintTextForRepeating();
             }
             else
             {
                 switch (userChoice)
                 {
                     case 0:
-                        ListOfBuyerNames(listBuyers);
-
-                        UserChoice(out restartLoop);
-                        break;
                     case 1:
-                        ShoppingCarts(listBuyers);
+                        ConsoleRepresentation.PrintListOfBuyersNamesOrSoppingCarts(listBuyers, userChoice);
 
-                        UserChoice(out restartLoop);
+                        GetUserChoice(out restartLoop);
                         break;
                     case 2:
-                        Console.WriteLine("Введите имя покупателя:");
-                        var nameOfBuyer = Console.ReadLine();
+                        ConsoleRepresentation.PrintNameOfBuyer();
+                        chosenBuyer = Console.ReadLine();
 
-                        if (string.IsNullOrEmpty(nameOfBuyer)) Console.WriteLine("Попробуйте еще раз.");
-                        else SummSoppingCart(nameOfBuyer, listBuyers);
+                        InstancesHelper.VerifyExistChosenUser(listBuyers, chosenBuyer, out var existingBuyer);
 
-                        UserChoice(out restartLoop);
+                        if (string.IsNullOrEmpty(chosenBuyer) || existingBuyer == false)
+                            ConsoleRepresentation.PrintTextForRepeating();
+                        else GetSumSoppingCart(listBuyers, chosenBuyer);
+
+                        GetUserChoice(out restartLoop);
                         break;
                     case 3:
-                        Console.WriteLine("Введите имя покупателя:");
+                        ConsoleRepresentation.PrintNameOfBuyer();
                         var nameNewUser = Console.ReadLine();
 
-                        Console.WriteLine("Введите id покупателя:");
+                        ConsoleRepresentation.PrintIdOfBuyer();
                         var idNewUser = Console.ReadLine();
 
-                        Console.WriteLine("Введите возраст покупателя:");
-                        int ageNewUser;
-                        var isAge = int.TryParse(Console.ReadLine(), out ageNewUser) && ageNewUser > 7 &&
-                                    ageNewUser < 100;
+                        ConsoleRepresentation.PrintAgeOfBuyer();
+                       
+                        InstancesHelper.VerifyCorrectNewBuyerAge(out var isAge, out var ageNewUser);
 
                         if (string.IsNullOrEmpty(nameNewUser) || string.IsNullOrEmpty(idNewUser) || isAge == false)
                         {
-                            Console.WriteLine("Заполните поля корректными данными. Попробуйте еще раз.");
+                            ConsoleRepresentation.PrintTextForRepeating();
                         }
                         else
                         {
-                            var newUser = new User()
-                                { PassportId = idNewUser, Name = nameNewUser, Age = ageNewUser, Products = null };
+                            InstancesHelper.CreateNewUser(out var newUser, idNewUser, nameNewUser, ageNewUser);
 
-                            VarifyNewBuyerById(idNewUser, newUser, listBuyers);
+                            if (VerifyNewBuyerById(idNewUser, newUser, listBuyers))
+                            {
+                                InstancesHelper.AddNewUserToList(newUser, listBuyers);
+                                
+                                ConsoleRepresentation.PrintAddingUser();
+                            }
+                            else
+                            {
+                                ConsoleRepresentation.PrintCancelAddingUser();
+                            }
                         }
 
-                        UserChoice(out restartLoop);
+                        GetUserChoice(out restartLoop);
                         break;
                     case 4:
-                        Console.WriteLine("Введите имя пользователя кому хотите добавить товар:");
+                        ConsoleRepresentation.PrintNameOfBuyer();
                         chosenBuyer = Console.ReadLine();
 
                         if (string.IsNullOrEmpty(chosenBuyer))
                         {
-                            Console.WriteLine("Попробуйте еще раз.");
+                            ConsoleRepresentation.PrintTextForRepeating();
                         }
                         else if (listBuyers.Any(s => s.Name == chosenBuyer))
                         {
-                            selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
+                            InstancesHelper.GetFirstMatchingBuyerByName(listBuyers, chosenBuyer, out selectedBuyer);
 
-                            string productName;
-                            Product newProduct;
-                            AddNewProduct(out productName, out newProduct);
+                            AddNewProduct(out var productName, out var newProduct);
 
-                            VarifyAgeForAlcohol(productName, newProduct, selectedBuyer, listBuyers);
+                            if (VerifyAgeForAlcohol(productName, listBuyers))
+                            {
+                                InstancesHelper.AddNewProductToBuyer(newProduct, selectedBuyer);
+
+                                ConsoleRepresentation.PrintProductAddConfirmation();
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+
+                                ConsoleRepresentation.PrintAgeLimitForAlcohol();
+
+                                Console.ResetColor();
+                            }
                         }
-                        else Console.WriteLine("Покупатель не зарегестрирован!");
+                        else ConsoleRepresentation.PrintUnregisteredBuyer();
 
-                        UserChoice(out restartLoop);
+                        GetUserChoice(out restartLoop);
                         break;
                     case 5:
-                        Console.WriteLine("Введите имя пользователя у кого хотите удалить товар:");
+                        ConsoleRepresentation.PrintNameOfBuyer();
                         chosenBuyer = Console.ReadLine();
 
                         if (string.IsNullOrEmpty(chosenBuyer))
                         {
-                            Console.WriteLine("Попробуйте еще раз.");
+                            ConsoleRepresentation.PrintTextForRepeating();
                         }
                         else if (listBuyers.Any(s => s.Name == chosenBuyer))
                         {
-                            selectedBuyer = listBuyers.First(buyer => buyer.Name == chosenBuyer);
+                            InstancesHelper.GetFirstMatchingBuyerByName(listBuyers, chosenBuyer, out selectedBuyer);
 
-                            Console.WriteLine("Введите имя товара:");
+                            ConsoleRepresentation.PrintNameOfProduct();
                             var deletedProductName = Console.ReadLine();
 
                             RemoveProductByName(selectedBuyer, deletedProductName);
                         }
-                        else Console.WriteLine("Покупатель не зарегестрирован!");
+                        else ConsoleRepresentation.PrintUnregisteredBuyer();
 
-                        UserChoice(out restartLoop);
+                        GetUserChoice(out restartLoop);
                         break;
                 }
             }
         }
     }
 
-    static void UserChoice(out bool restartLoop)
+    static void GetUserChoice(out bool restartLoop)
     {
-        Console.WriteLine("Вернуться в главное меню? Y/N");
+        ConsoleRepresentation.PrintContinueOrStopProgram();
         var choice = Console.ReadLine();
-       
-        if (choice == "Y")
+
+        if (choice == "Y" || choice == "y")
         {
             restartLoop = true;
         }
         else restartLoop = false;
     }
 
-    static void ListOfBuyerNames(List<User> listBuyers)
+    static void GetSumSoppingCart(List<User> listBuyers, string chosenBuyer)
     {
-        foreach (var buyer in listBuyers)
-        {
-            Console.WriteLine($"{buyer.Name}");
-        }
+        InstancesHelper.GetFirstMatchingBuyerByName(listBuyers, chosenBuyer, out var selectedBuyer);
+
+        InstancesHelper.GetSumOfBuyerCart(selectedBuyer, out var selectedBuyerCartSum);
+
+        ConsoleRepresentation.PrintSumSoppingCart(selectedBuyer, selectedBuyerCartSum);
     }
 
-    static void ShoppingCarts(List<User> listBuyers)
+    static bool VerifyNewBuyerById(string id, User newUser, List<User> listBuyers)
     {
-        foreach (var buyer in listBuyers)
-        {
-            Console.WriteLine($"{buyer.Name}, {buyer.PassportId}");
-            foreach (var product in buyer.Products)
-            {
-                Console.WriteLine(
-                    $"{product.ProductName}, {product.ProductCategory[0]}, {product.ProductPrice}$");
-            }
-        }
-    }
-
-    static void SummSoppingCart(string nameOfBuyer, List<User> listBuyers)
-    {
-        var selectedBuyer = listBuyers.First(buyer => buyer.Name == nameOfBuyer);
-        var selectedBuyerCartSum = selectedBuyer.Products.Sum(product => product.ProductPrice);
-        Console.WriteLine(
-            $"Итоговая сумма всех товаров в корзине покупателя:{selectedBuyer.Name} - {selectedBuyerCartSum}$");
-    }
-
-    static void VarifyNewBuyerById(string id, User newUser, List<User> listBuyers)
-    {
-        bool contains = listBuyers.Any(s => s.PassportId == id);
+        var contains = listBuyers.Any(s => s.PassportId == id);
 
         if (contains)
         {
-            Console.WriteLine("Пользователь с таким Id уже существует!");
+            return true;
         }
         else
         {
-            listBuyers.Add(newUser);
-            Console.WriteLine("Покупатель добавлен.");
+            return false;
         }
     }
 
     static void AddNewProduct(out string productName, out Product newProduct)
     {
-        Console.WriteLine("Введите id товара:");
-        var productId = Console.ReadLine();
-        
-        Console.WriteLine("Введите имя товара:");
+        ConsoleRepresentation.PrintNameOfProduct();
         productName = Console.ReadLine();
-        
-        Console.WriteLine("Введите цену товара:");
+
+        ConsoleRepresentation.PrintIdOfProduct();
+        var productId = Console.ReadLine();
+
+        ConsoleRepresentation.PrintPriceOfProduct();
         var productPrice = int.Parse(Console.ReadLine());
-        
-        Console.WriteLine("Введите описание товара:");
+
+        ConsoleRepresentation.PrintDescriptionOfProduct();
         var productCategory = Console.ReadLine();
 
-        newProduct = new Product()
-        {
-            ProductId = productId, ProductName = productName, ProductPrice = productPrice,
-            ProductCategory = productCategory
-        };
+        InstancesHelper.CreateNewProduct(out newProduct, productId, productName, productPrice, productCategory);
     }
 
-    static void VarifyAgeForAlcohol(string productName, Product newProduct, User selectedBuyer2, List<User> listBuyers)
+    static bool VerifyAgeForAlcohol(string productName, List<User> listBuyers)
     {
-        if (productName == "Alcohol" && listBuyers.Any(s => s.Age < 18))
+        const int ageToBuyAlcohol = 18;
+
+        if (productName == "Alcohol" && listBuyers.Any(s => s.Age < ageToBuyAlcohol))
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Алкоголь можно покупать лицам старше 18 лет!");
-            Console.ResetColor();
+            return false;
         }
         else
         {
-            selectedBuyer2.Products.Add(newProduct);
-            Console.WriteLine("Товар добавлен в корзину.");
+            return true;
         }
     }
 
-    static void RemoveProductByName(User selectedBuyer3, string deletedProductName)
+    static void RemoveProductByName(User selectedBuyer, string deletedProductName)
     {
-        if (selectedBuyer3.Products.Any(s => s.ProductName == deletedProductName))
+        if (selectedBuyer.Products.Any(s => s.ProductName == deletedProductName))
         {
-            selectedBuyer3.Products.RemoveAll(product => product.ProductName == deletedProductName);
-            Console.WriteLine("Товар удален из корзины.");
+            InstancesHelper.RemoveProductFromBuyerCart(selectedBuyer, deletedProductName);
+
+            ConsoleRepresentation.PrintProductRemoveConfirmation();
         }
         else
         {
-            Console.WriteLine("Такого товара нет в корзине.");
+            ConsoleRepresentation.PrintProductAbsence();
         }
     }
 }
