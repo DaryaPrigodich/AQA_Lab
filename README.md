@@ -1,14 +1,18 @@
 # Task:
 1. Необходимо создать некоторых пользователей:
-   Candidate(находится в поиске работы) - Guid Id, имя, фамилия, желаемая должность, краткое описание должности, заработная плата.
-   Employee(занимает какую-либо должность в какой-либо компании) - Guid Id, имя, фамилия, должность, краткое описание должности, заработная плата; компания в которой работает, страна, город и физический адрес компании.
+
+   - Candidate(находится в поиске работы) - Guid Id, имя, фамилия, желаемая должность, краткое описание должности, заработная плата.
+   
+   - Employee(занимает какую-либо должность в какой-либо компании) - Guid Id, имя, фамилия, должность, краткое описание должности, заработная плата; компания в которой работает, страна, город и физический адрес компании.
 
 2. Создать и реализовать интерфейс, который будет содержать метод, выводящий в консоли данные о пользователе.
    Пример:
-   "Hello, I am {FullName} I want to be a {JobTittle}({JobDescriptor}) with a salary from {JobSalary}."
-   "Hello, I am {FullName}, {JobTittle} in {CompanyName}({CompanyCountry}), {CompanyCity}, {CompanyStreet} and my salary {JobSalary}."
+   
+   - "Hello, I am {FullName} I want to be a {JobTittle}({JobDescriptor}) with a salary from {JobSalary}."
+   
+   - "Hello, I am {FullName}, {JobTittle} in {CompanyName}({CompanyCountry}), {CompanyCity}, {CompanyStreet} and my salary {JobSalary}."
 
-3. Заполнить все данные о пользователях и компании используя библиотеку Bogus.
+3. Заполнить все данные о пользователях и компании используя библиотеку **Bogus**.
 
 4. Реализовать создание рандомного количества Candidate, Employee.
 
