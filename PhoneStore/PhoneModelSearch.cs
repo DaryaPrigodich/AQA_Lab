@@ -21,6 +21,8 @@ public static class PhoneModelSearch
                          .Any(s => s.Model == model && s.IsAvailable == false)))
             {
                 ConsoleRepresentation.PrintPhoneNotAvailable();
+                
+                GetPhoneModel(restoredShops,out phoneModel);
             }
             else
             {
@@ -30,6 +32,7 @@ public static class PhoneModelSearch
         catch (PhoneNotFoundException ex)
         {
             Console.WriteLine(ex.Message);
+            throw;
         }
     }
 }
