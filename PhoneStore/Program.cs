@@ -1,29 +1,17 @@
-﻿using System.Text.Json;
+﻿namespace PhoneStore;
 
-namespace PhoneStore;
-
-class Program
+public class Program
 {
     public static void Main(string[] args)
     {
-        JsonAnalysis.DeserializeJsonFile(out var restoredShops);
+        JsonAnalysis.DeserializeJsonFile();
         
-        Phone.GetCountOfPhonesInEachShops(restoredShops);
+        CountOfPhones.GetCountOfPhonesInEachShops();
        
-       PhoneModelSearch.GetPhoneModel(restoredShops, out var phoneModel);
+       var phoneModel = ConsoleRepresentation.GetPhoneModel();
        
-       ShopSearch.GetShop(phoneModel,restoredShops, out var  marketLaunchDate, out var phonePrice, out var chosenShop);
+       var shopName = ConsoleRepresentation.GetShop(phoneModel);
 
-       var orderReceipt = new OrderReceipt
-       {
-           PhoneModel = phoneModel,
-           MarketLaunchDate = marketLaunchDate,
-           PhonePrice = phonePrice,
-           Shop = chosenShop
-       };
-       
-       var orderReceiptJson = JsonSerializer.Serialize<OrderReceipt>(orderReceipt);
-
-       Console.WriteLine(orderReceiptJson);
+       WorkWithReceipt.CreateReceipt(phoneModel, shopName);
     }
 }

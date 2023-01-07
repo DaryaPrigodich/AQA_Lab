@@ -1,4 +1,4 @@
-﻿namespace PhoneStore;
+﻿namespace PhoneStore.Models;
 
 public class OrderReceipt
 {
@@ -9,4 +9,6 @@ public class OrderReceipt
     public string Shop { get; set; }
 
     public string PhonePrice { get; set; }
+    
+    public DateTime Date { get; set; }
 }

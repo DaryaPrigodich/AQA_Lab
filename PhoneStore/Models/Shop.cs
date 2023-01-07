@@ -1,4 +1,4 @@
-﻿using PhoneStore;
+﻿namespace PhoneStore.Models;
 
 public class Shop
 {

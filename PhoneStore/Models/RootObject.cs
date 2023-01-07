@@ -1,4 +1,6 @@
-﻿namespace PhoneStore;
+﻿using PhoneStore.Models;
+
+namespace PhoneStore;
 
 public class RootObject
 {
