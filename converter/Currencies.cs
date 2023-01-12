@@ -1,4 +1,4 @@
-﻿namespace convert;
+﻿namespace converter;
 
 public class Currencies
 {
