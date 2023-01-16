@@ -1,16 +1,15 @@
 ﻿namespace converter;
 
-public class CurrenciesDictionary
+public static class CurrenciesDictionary
 {
-    public static Dictionary<string, double> CreateDictionary()
+    public static Dictionary<string, double> CreateDictionary(double usdZlIndex, double eurZlIndex)
     {
-        EntitySearch.GetCurrenciesIndices(out var usdZlIndex, out var eurZlIndex);
         var zlEurIndex = 1 / eurZlIndex;
         var zlUsdIndex = 1 / usdZlIndex;
         var eurUsdIndex = eurZlIndex / usdZlIndex;
         var usdEurIndex = usdZlIndex / eurZlIndex;
         
-        var exchangeIndices = new Dictionary<string, double>
+        return new Dictionary<string, double>
         {
             { $"{Currencies.Zl} - {Currencies.Eur}", zlEurIndex},
             { $"{Currencies.Zl} - {Currencies.Usd}", zlUsdIndex},
@@ -19,6 +18,5 @@ public class CurrenciesDictionary
             { $"{Currencies.Usd} - {Currencies.Zl}", usdZlIndex},
             { $"{Currencies.Usd} - {Currencies.Eur}", usdEurIndex}
         };
-        return exchangeIndices;
     }
 }

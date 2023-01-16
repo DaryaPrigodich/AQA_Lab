@@ -2,7 +2,7 @@
 
 public static class Converter
 {
-    public static void ConvertCurrency()
+    public static void ConvertCurrency(Dictionary<string, double> exchangeIndices)
     {
         double sumCurrency;
         try
@@ -30,16 +30,14 @@ public static class Converter
         }
         else
         {
-            var exchangedSum = GetExchangedSumCurrency(sumCurrency, convertibleCurrency, currencyToConvert);
+            var exchangedSum = GetExchangedSumCurrency(sumCurrency, convertibleCurrency, currencyToConvert,exchangeIndices);
             ConsoleRepresentation.PrintExchangedSum(exchangedSum, currencyToConvert);
         }
     }
 
     private static double GetExchangedSumCurrency(double sumCurrency, string convertibleCurrency,
-        string currencyToConvert)
+        string currencyToConvert, Dictionary<string, double> exchangeIndices)
     {
-        var exchangeIndices = CurrenciesDictionary.CreateDictionary();
-
         return (convertibleCurrency, currencyToConvert) switch
         {
             (Currencies.Usd, Currencies.Eur) => sumCurrency * exchangeIndices[$"{Currencies.Usd} - {Currencies.Eur}"],
