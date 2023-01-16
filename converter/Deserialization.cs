@@ -4,15 +4,11 @@ namespace converter;
 
 public static class Deserialization
 {
-    public static Currency.Root? DeserializeUsdCurrency()
+    public static void DeserializeResponse(out Root UsdCurrencyInformation, out Root EurCurrencyInformation)
     {
-        var responseMessageForUsd = HttpClientForRequest.SentRequestForUsd();
-        return JsonSerializer.Deserialize<Currency.Root>(responseMessageForUsd);
-    }
-    
-    public static Currency.Root? DeserializeEurCurrency()
-    {
-        var responseMessageForEur = HttpClientForRequest.SentRequestForEur();
-        return JsonSerializer.Deserialize<Currency.Root>(responseMessageForEur);
+        CurrencyInfoService.SentRequest(out var responseMessageForUsd, out var responseMessageForEur);
+       
+        UsdCurrencyInformation = JsonSerializer.Deserialize<Root>(responseMessageForUsd);
+        EurCurrencyInformation = JsonSerializer.Deserialize<Root>(responseMessageForEur);
     }
 }

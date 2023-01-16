@@ -4,8 +4,7 @@ public class CurrenciesDictionary
 {
     public static Dictionary<string, double> CreateDictionary()
     {
-        var usdZlIndex = EntitySearchUsingLinq.GetUsdZlIndex();
-        var eurZlIndex = EntitySearchUsingLinq.GetEurZlIndex();
+        EntitySearch.GetCurrenciesIndices(out var usdZlIndex, out var eurZlIndex);
         var zlEurIndex = 1 / eurZlIndex;
         var zlUsdIndex = 1 / usdZlIndex;
         var eurUsdIndex = eurZlIndex / usdZlIndex;

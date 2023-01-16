@@ -1,6 +1,6 @@
 ﻿namespace converter;
 
-public class Converter
+public static class Converter
 {
     public static void ConvertCurrency()
     {
