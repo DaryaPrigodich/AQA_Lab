@@ -9,6 +9,8 @@ public class DashboardPage : BasePage
     
     private static readonly By SidebarProjectsAddButtonBy = By.Id("sidebar-projects-add");
 
+    private IWebElement SidebarProjectsAddButton => Driver.FindElement(SidebarProjectsAddButtonBy);
+
     public DashboardPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
     {
     }
@@ -33,6 +35,9 @@ public class DashboardPage : BasePage
             return false;     
         }    
     }
-
-    public IWebElement SidebarProjectsAddButton => Driver.FindElement(SidebarProjectsAddButtonBy);
+    
+    public void ClickAddProjectButton()
+    {
+        SidebarProjectsAddButton.Click();
+    }
 }

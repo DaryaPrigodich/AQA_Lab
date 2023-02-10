@@ -11,7 +11,7 @@ public class BaseTest
     public static string BaseURL = Configurator.BaseURL;
     protected Project Project;
 
-    protected IWebDriver _driver;
+    [ThreadStatic] protected static IWebDriver Driver;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -22,13 +22,13 @@ public class BaseTest
     [SetUp]
     public void Setup()
     {
-        _driver = new BrowserService().WebDriver;
+        Driver = new BrowserService().WebDriver;
     }
     
     [TearDown]
     public void TearDown()
     {
-        _driver.Quit();
+        Driver.Quit();
     }
 
     private void SetUpProject()

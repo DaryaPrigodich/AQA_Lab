@@ -9,6 +9,8 @@ public class SuccessfullyAddedProjectPage : BasePage
     
     private static readonly By MessageSuccessBy = By.XPath("//*[@id='content-inner']/child::*[contains(@class,'message-success')]");
 
+    private IWebElement MessageSuccess => Driver.FindElement(MessageSuccessBy);
+
     public SuccessfullyAddedProjectPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
     {
     }
@@ -33,6 +35,4 @@ public class SuccessfullyAddedProjectPage : BasePage
             return false;     
         }    
     }
-    
-    public IWebElement MessageSuccess => Driver.FindElement(MessageSuccessBy);
 }

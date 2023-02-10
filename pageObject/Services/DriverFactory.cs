@@ -25,9 +25,10 @@ public class DriverFactory
 
      public IWebDriver GetFirefoxDriver()
      {
-          var mimeTypes = "image/png,image/jpeg,image/gif,image/pjpeg,application/pdf,text/csv,application/vnd.ms-exel" +
+          var mimeTypes = "image/png,image/gif,image/jpeg,image/pjpeg,application/pdf,text/csv,application/vnd.ms-excel," +
                           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" +
                           "application/vnd.openxmlformats-officedocument.wordprocessingml.document"; 
+          
           var ffOptions = new FirefoxOptions();  
           var profile = new FirefoxProfile();
           

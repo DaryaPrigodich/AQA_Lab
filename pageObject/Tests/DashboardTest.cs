@@ -1,5 +1,5 @@
 ﻿using pageObject.BaseEntities;
-using pageObject.Steps;
+using pageObject.Pages;
 
 namespace pageObject;
 
@@ -8,17 +8,17 @@ public class DashboardTest : BaseTest
     [SetUp]
     public void Setup()
     {
-        var loginSteps = new LoginSteps(_driver);
-        loginSteps.Login();
+        var loginPage = new LoginPage(Driver, true);
+        loginPage.Login();
     }
     
     [Test]
     [SmokeTest]
     public void AddProjectButtonTest()
     {
-        var dashboardSteps = new DashboardSteps(_driver);
-        dashboardSteps.ClickAddProjectButton();
+        var dashboardPage = new DashboardPage(Driver);
+        dashboardPage.ClickAddProjectButton();
         
-        Assert.AreEqual(_driver.Title,"Add Project - TestRail");
+        Assert.AreEqual(Driver.Title,"Add Project - TestRail");
     }
 }

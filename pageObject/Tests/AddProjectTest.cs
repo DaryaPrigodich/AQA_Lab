@@ -1,7 +1,5 @@
 ﻿using pageObject.BaseEntities;
-using pageObject.Enums;
 using pageObject.Pages;
-using pageObject.Steps;
 
 namespace pageObject;
 
@@ -10,37 +8,37 @@ public class AddProjectTest : BaseTest
     [SetUp]
     public void Setup()
     {
-        var loginSteps = new LoginSteps(_driver);
-        loginSteps.Login();
+        var loginPage = new LoginPage(Driver,true);
+        loginPage.Login();
     }
 
     [Test]
     [SmokeTest]
     public void AddSingleForAllTypeProjectTest()
     {
-        var addProjectsSteps = new AddProjectSteps(_driver);
-        addProjectsSteps.AddProject(Project.Name, Project.Announcement, Project.Type = ProjectType.SingleForAll);
+        var addProjectPage = new AddProjectPage(Driver, true);
+        addProjectPage.AddProject(Project.Name, Project.Announcement, Project.Type[0]);
 
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(_driver).IsPageOpened());
+        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
     }
 
     [Test]
     [SmokeTest]
     public void AddSingleBaselineTypeProjectTest()
     {
-        var addProjectsSteps = new AddProjectSteps(_driver);
-        addProjectsSteps.AddProject(Project.Name, Project.Announcement, Project.Type = ProjectType.SingleBaseline);
+        var addProjectPage = new AddProjectPage(Driver,true);
+        addProjectPage.AddProject(Project.Name, Project.Announcement, Project.Type[1]);
 
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(_driver).IsPageOpened());
+        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
     }
 
     [Test]
     [SmokeTest]
     public void AddMultipleTypeProjectTest()
     {
-        var addProjectsSteps = new AddProjectSteps(_driver);
-        addProjectsSteps.AddProject(Project.Name, Project.Announcement, Project.Type = ProjectType.Multiple);
+        var addProjectPage = new AddProjectPage(Driver,true);
+        addProjectPage.AddProject(Project.Name, Project.Announcement, Project.Type[2]);
 
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(_driver).IsPageOpened());
+        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
     }
 }
