@@ -12,6 +12,7 @@ public class Configurator
     public static string Username => Configuration[nameof(Username)];
     public static string Password => Configuration[nameof(Password)];
     public static string BrowserType => Configuration[nameof(BrowserType)];
+    public static int WaitTimeout => int.Parse(Configuration[nameof(WaitTimeout)]);
 
     static Configurator()
     {

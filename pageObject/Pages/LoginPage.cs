@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using pageObject.BaseEntities;
+using pageObject.Core.Wrappers;
 using pageObject.Services;
 
 namespace pageObject.Pages;
@@ -12,9 +13,9 @@ public class LoginPage : BasePage
     private static readonly By PswInputBy = By.Id("password");
     private static readonly By LoginButtonBy = By.Id("button_primary");
 
-    private IWebElement EmailInput => Driver.FindElement(EmailInputBy);
-    private IWebElement PswInput => Driver.FindElement(PswInputBy);
-    private IWebElement LoginButton => Driver.FindElement(LoginButtonBy);
+    private UIElement EmailInput => new (Driver,EmailInputBy);
+    private UIElement PswInput => new (Driver, PswInputBy);
+    private Button LoginButton => new (Driver, LoginButtonBy);
     
     public LoginPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
     {

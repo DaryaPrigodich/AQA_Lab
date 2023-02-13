@@ -21,4 +21,13 @@ public class DashboardTest : BaseTest
         
         Assert.AreEqual(Driver.Title,"Add Project - TestRail");
     }
+
+    [Test]
+    public void WrapperTest()
+    {
+        var dashboardPage = new DashboardPage(Driver,true);
+        
+        var countUserDropDownOptions = dashboardPage.GetCountUserDropDownOptions();
+        Console.Out.WriteLine(countUserDropDownOptions);
+    }
 }

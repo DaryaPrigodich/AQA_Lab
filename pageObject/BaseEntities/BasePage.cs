@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using pageObject.Services;
 
 namespace pageObject.BaseEntities;
 
@@ -6,6 +7,7 @@ public abstract class BasePage
 {
     private static readonly int WAIT_FOR_PAGE_LOADING_TIME = 60;
     [ThreadStatic] protected static IWebDriver Driver;
+    protected WaitService _waitService;
 
     protected abstract void OpenPage();
     public abstract bool IsPageOpened();

@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using pageObject.BaseEntities;
+using pageObject.Core.Wrappers;
 
 namespace pageObject.Pages;
 
@@ -9,7 +10,7 @@ public class SuccessfullyAddedProjectPage : BasePage
     
     private static readonly By MessageSuccessBy = By.XPath("//*[@id='content-inner']/child::*[contains(@class,'message-success')]");
 
-    private IWebElement MessageSuccess => Driver.FindElement(MessageSuccessBy);
+    private UIElement MessageSuccess => new(Driver, MessageSuccessBy);
 
     public SuccessfullyAddedProjectPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
     {
