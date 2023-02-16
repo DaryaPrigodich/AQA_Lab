@@ -8,38 +8,22 @@ namespace pageObject.Pages;
 public class LoginPage : BasePage
 {
     private static string END_POINT = ""; 
+ 
+    private UIElement EmailInput => new (Driver,By.Id("name"));
+    private UIElement PswInput => new (Driver, By.Id("password"));
+    private Button LoginButton => new (Driver, By.Id("button_primary"));
     
-    private static readonly By EmailInputBy = By.Id("name");
-    private static readonly By PswInputBy = By.Id("password");
-    private static readonly By LoginButtonBy = By.Id("button_primary");
-
-    private UIElement EmailInput => new (Driver,EmailInputBy);
-    private UIElement PswInput => new (Driver, PswInputBy);
-    private Button LoginButton => new (Driver, LoginButtonBy);
-    
-    public LoginPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
+    public LoginPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
     {
     }
     
-    public LoginPage(IWebDriver _driver) : base(_driver,false)
+    public LoginPage(IWebDriver driver) : base(driver,false)
     {
     }
     
     protected override void OpenPage()
     {
         Driver.Navigate().GoToUrl(BaseTest.BaseURL + END_POINT);
-    }
-
-    public override bool IsPageOpened()
-    {
-        try
-        {
-            return LoginButton.Displayed; 
-        }
-        catch (Exception e)
-        {
-            return false;     
-        }    
     }
     
     public void Login()

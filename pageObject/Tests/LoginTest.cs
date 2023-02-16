@@ -12,6 +12,6 @@ public class LoginTest : BaseTest
         var loginPage = new LoginPage(Driver,true);
         loginPage.Login();
         
-        Assert.AreEqual(Driver.Title, "All Projects - TestRail");
+        Assert.AreEqual(Driver.Title, "All Projects - TestRail", "Invalid credentials.");
     }
 }

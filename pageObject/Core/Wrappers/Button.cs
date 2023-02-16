@@ -13,7 +13,6 @@ public class Button
     public string TagName => _uiElement.TagName;
     public string Text => _uiElement.Text;
     public bool Enabled => _uiElement.Enabled;
-    public bool Selected => _uiElement.Selected;
     public bool Displayed => _uiElement.Displayed;
     public void Click() => _uiElement.Click();
 }

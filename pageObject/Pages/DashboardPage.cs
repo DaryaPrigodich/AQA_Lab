@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using pageObject.BaseEntities;
 using pageObject.Core.Wrappers;
+using pageObject.Enums;
 
 namespace pageObject.Pages;
 
@@ -8,21 +9,15 @@ public class DashboardPage : BasePage
 {
     private static string END_POINT = "/index.php?/dashboard";
 
-    private static readonly By SidebarProjectsAddButtonBy = By.Id("sidebar-projects-add");
-    private static readonly By NavigationUserBy = By.Id("userDropdown");
-    private static readonly By NavigationMenuBy = By.Id("helpDropdown");
+    private DropDownMenu UserMenu => new(Driver, By.Id("userDropdown"));
+    private DropDownMenu HelpMenu => new(Driver, By.Id("helpDropdown"));
+    private Button SidebarProjectsAdd => new(Driver, By.Id("sidebar-projects-add"));
 
-    private IWebElement NavigationUserDropDown => Driver.FindElement(NavigationUserBy);
-
-    private DropDownMenu NavigationUser => new(Driver, NavigationUserDropDown);
-    private DropDownMenu NavigationMenu => new(Driver, NavigationMenuBy);
-    private Button SidebarProjectsAdd => new(Driver, SidebarProjectsAddButtonBy);
-
-    public DashboardPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
+    public DashboardPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
     {
     }
 
-    public DashboardPage(IWebDriver _driver) : base(_driver, false)
+    public DashboardPage(IWebDriver driver) : base(driver, false)
     {
     }
 
@@ -31,25 +26,33 @@ public class DashboardPage : BasePage
         Driver.Navigate().GoToUrl(BaseTest.BaseURL + END_POINT);
     }
 
-    public override bool IsPageOpened()
-    {
-        try
-        {
-            return SidebarProjectsAdd.Displayed;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-    
-    public int GetCountUserDropDownOptions()
-    {
-        return NavigationUser.GetCountOptions();
-    }
-
     public void ClickAddProjectButton()
     {
         SidebarProjectsAdd.Click();
+    }
+
+    public int GetCountUserMenuOptions()
+    {
+        return UserMenu.GetCountOptions();
+    }
+
+    public int GetCountHelpMenuOptions()
+    {
+        return HelpMenu.GetCountOptions();
+    }
+    
+    public string GetOptionTextHelpMenu(int index)
+    {
+        return HelpMenu.GetOptionText(index);
+    }
+
+    public void ChooseHelpMenuOptionByIndex(int optionIndex)
+    {
+        HelpMenu.ChooseOptionByIndex(Dropdown.helpDropdown, optionIndex);
+    }
+
+    public void ChooseUserMenuOptionByValue(string optionValue)
+    {
+        UserMenu.ChooseOptionByValue(Dropdown.userDropdown, optionValue);
     }
 }

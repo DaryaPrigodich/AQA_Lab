@@ -6,7 +6,7 @@ namespace pageObject.Core.Wrappers;
 public class Table
 {
     private UIElement _uiElement;
-    private List<TableRow> _rowList = new List<TableRow>();
+    private List<TableRow> _rowList = new ();
 
     public Table(IWebDriver driver,By by)
     {
@@ -28,7 +28,6 @@ public class Table
 
     public IWebElement GetElementFromCell(string columnHeader, string columnValue, string targetColumnHeader)
     {
-        //перебираем все Headers до тех пор пока он не будет равен columnHeader и получаем его индекс
         var indexColumnHeader = Headers.TakeWhile(header => !header.Text.Normalize().Equals(columnHeader)).Count();
         var indexTargetColumnHeader = Headers.TakeWhile(header => !header.Text.Normalize().Equals(targetColumnHeader)).Count();
 
@@ -40,7 +39,6 @@ public class Table
                 return cells[indexTargetColumnHeader];
             }
         }
-
         return null;
     }
 }

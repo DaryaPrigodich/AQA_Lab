@@ -17,9 +17,9 @@ public class AddProjectTest : BaseTest
     public void AddSingleForAllTypeProjectTest()
     {
         var addProjectPage = new AddProjectPage(Driver, true);
-        addProjectPage.AddProject(Project.Name, Project.Announcement,true, Project.Type[0]);
+        addProjectPage.AddNewProject(Project.Name, Project.Announcement,true, 1);
 
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
+        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened(), "Project hasn't been added.");
     }
 
     [Test]
@@ -27,9 +27,9 @@ public class AddProjectTest : BaseTest
     public void AddSingleBaselineTypeProjectTest()
     {
         var addProjectPage = new AddProjectPage(Driver,true);
-        addProjectPage.AddProject(Project.Name, Project.Announcement,true, Project.Type[1]);
+        addProjectPage.AddNewProject(Project.Name, Project.Announcement,true,2);
 
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
+        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened(), "Project hasn't been added.");
     }
 
     [Test]
@@ -37,17 +37,8 @@ public class AddProjectTest : BaseTest
     public void AddMultipleTypeProjectTest()
     {
         var addProjectPage = new AddProjectPage(Driver,true);
-        addProjectPage.AddProject(Project.Name, Project.Announcement,false, Project.Type[2]);
+        addProjectPage.AddNewProject(Project.Name, Project.Announcement,false,3);
 
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
-    }
-
-    [Test]
-    public void RadioProjectTest()
-    {
-        var addProjectPage = new AddProjectPage(Driver,true);
-        addProjectPage.AddProject1(Project.Name, Project.Announcement,3,true);
-        
-        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened());
+        Assert.IsTrue(new SuccessfullyAddedProjectPage(Driver).IsPageOpened(), "Project hasn't been added.");
     }
 }

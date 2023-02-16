@@ -12,11 +12,8 @@ public class CheckBox
     }
     
     public string TagName => _uiElement.TagName;
-    
     public bool Enabled => _uiElement.Enabled;
-
     public bool Selected => _uiElement.Selected;
-    
     public bool Displayed => _uiElement.Displayed;
 
     private void DoAction(bool flag)

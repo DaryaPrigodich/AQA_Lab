@@ -1,9 +1,4 @@
 {
   "Name": "TestProject",
-  "Announcement": "TestProject Announcement",
-  "Type": [
-    0,
-    1,
-    2
-  ]
+  "Announcement": "TestProject Announcement"
 }

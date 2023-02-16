@@ -7,39 +7,39 @@ public class Radio
 {
     private UIElement _uiElement;
     private ReadOnlyCollection<IWebElement> _radioModes;
-    
+
     public Radio(IWebDriver driver, By by)
     {
         _uiElement = new UIElement(driver, by);
         _radioModes = _uiElement.FindElements(by);
     }
-    
-    public string TagName => _uiElement.TagName;
-    
-    public bool Enabled => _uiElement.Enabled;
 
+    public string TagName => _uiElement.TagName;
+    public bool Enabled => _uiElement.Enabled;
     public bool Selected => _uiElement.Selected;
-    
     public bool Displayed => _uiElement.Displayed;
-    
+
     public int Count()
     {
         return _radioModes.Count;
     }
 
-    public string RadioText(int value)
-    {
-        return _radioModes[value].GetAttribute("innerText");
-    }
-    
     public void ChooseRadioMode(int radioValue)
     {
-        foreach (var radioMode in _radioModes)
+        try
         {
-            if (int.Parse(radioMode.GetAttribute("value")).Equals(radioValue))
+            foreach (var radioMode in _radioModes)
             {
-                radioMode.Click();
+                if (int.Parse(radioMode.GetAttribute("value")).Equals(radioValue))
+                {
+                    radioMode.Click();
+                }
             }
+        }
+        catch (NoSuchElementException e)
+        {
+            Console.WriteLine("Radio with such value doesn't exist.");
+            throw;
         }
     }
 }

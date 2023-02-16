@@ -11,7 +11,8 @@ public class BaseTest
     public static string BaseURL = Configurator.BaseURL;
     protected Project Project;
 
-    [ThreadStatic] protected static IWebDriver Driver;
+    [ThreadStatic] 
+    protected static IWebDriver Driver;
 
     [OneTimeSetUp]
     public void OneTimeSetUp()
@@ -22,7 +23,7 @@ public class BaseTest
     [SetUp]
     public void Setup()
     {
-        Driver = new BrowserService().WebDriver;
+        Driver = new BrowserService(Configurator.ChromeBrowser).WebDriver;
     }
     
     [TearDown]
@@ -34,7 +35,7 @@ public class BaseTest
     private void SetUpProject()
     {
         var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        var fullPathToFile = Path.Combine(basePath, $"TestData{Path.DirectorySeparatorChar}", @"project.json");
+        var fullPathToFile = Path.Combine(basePath, $"TestData{Path.DirectorySeparatorChar}", "project.json");
 
         var jsonStream = File.ReadAllText(fullPathToFile);
         Project = JsonSerializer.Deserialize<Project>(jsonStream);

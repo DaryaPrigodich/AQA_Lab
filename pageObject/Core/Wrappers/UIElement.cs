@@ -21,7 +21,7 @@ public class UIElement : IWebElement
         _by = by;
         _actions = new Actions(driver);
         _waitService = new WaitService(_driver);
-        _webElement = _waitService.GetVisibleElement(_by);
+        _webElement = _waitService.GetExistElement(_by);
         _jsExecutor = (IJavaScriptExecutor)driver;
     }
 
@@ -33,8 +33,7 @@ public class UIElement : IWebElement
         _jsExecutor = (IJavaScriptExecutor)driver;
         _waitService = new WaitService(_driver); 
     }
-   
-
+    
     public IWebElement FindElement(By by)
     {
         return _webElement.FindElement(by);

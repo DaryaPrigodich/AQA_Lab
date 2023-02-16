@@ -6,7 +6,8 @@ namespace pageObject.Services;
 
 public class WaitService
 {
-    [ThreadStatic] protected static IWebDriver _driver;
+    [ThreadStatic]
+    protected static IWebDriver _driver;
 
     private readonly WebDriverWait _waitService;
 
@@ -23,41 +24,25 @@ public class WaitService
 
     public IWebElement GetVisibleElement(By by)
     {
-        try
-        {
-            return _waitService.Until(ExpectedConditions.ElementIsVisible(by));
-        }
-        catch (Exception e)
-        {
-            throw new AssertionException(e.Message);
-        }
+        return _waitService.Until(ExpectedConditions.ElementIsVisible(by));
     }
 
     public bool IsElementInVisible(By by)
     {
-        try
-        {
-            return _waitService.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
-        }
-        catch (Exception e)
-        {
-            throw new AssertionException(e.Message);
-        }
+        return _waitService.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
     }
 
     public IWebElement GetExistElement(By by)
     {
-        try
-        {
-            return _waitService.Until(ExpectedConditions.ElementExists(by));
-        }
-        catch (Exception e)
-        {
-            throw new AssertionException(e.Message);
-        }
+        return _waitService.Until(ExpectedConditions.ElementExists(by));
     }
 
     public IWebElement WaitElementIsClickable(By by)
+    {
+        return _waitService.Until(ExpectedConditions.ElementToBeClickable(by));
+    }
+
+    public IWebElement GetClickableElement(By by)
     {
         return _waitService.Until(ExpectedConditions.ElementToBeClickable(by));
     }
