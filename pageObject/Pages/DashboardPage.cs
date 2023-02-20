@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using pageObject.BaseEntities;
 using pageObject.Core.Wrappers;
 using pageObject.Enums;
@@ -7,7 +8,7 @@ namespace pageObject.Pages;
 
 public class DashboardPage : BasePage
 {
-    private static string END_POINT = "/index.php?/dashboard";
+    private const string Endpoint = "/index.php?/dashboard";
 
     private DropDownMenu UserMenu => new(Driver, By.Id("userDropdown"));
     private DropDownMenu HelpMenu => new(Driver, By.Id("helpDropdown"));
@@ -23,9 +24,10 @@ public class DashboardPage : BasePage
 
     protected override void OpenPage()
     {
-        Driver.Navigate().GoToUrl(BaseTest.BaseURL + END_POINT);
+        Driver.Navigate().GoToUrl(BaseTest.BaseURL + Endpoint);
     }
-
+    
+    [AllureStep("Click to 'Add Project' button")]
     public void ClickAddProjectButton()
     {
         SidebarProjectsAdd.Click();
@@ -46,11 +48,13 @@ public class DashboardPage : BasePage
         return HelpMenu.GetOptionText(index);
     }
 
+    [AllureStep("Click to HelpMenu dropdown option with index {0}")]
     public void ChooseHelpMenuOptionByIndex(int optionIndex)
     {
         HelpMenu.ChooseOptionByIndex(Dropdown.helpDropdown, optionIndex);
     }
-
+    
+    [AllureStep("Click to HelpMenu dropdown option with value {0}")]
     public void ChooseUserMenuOptionByValue(string optionValue)
     {
         UserMenu.ChooseOptionByValue(Dropdown.userDropdown, optionValue);

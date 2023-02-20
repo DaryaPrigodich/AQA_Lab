@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Allure.Attributes;
+using OpenQA.Selenium;
 using pageObject.BaseEntities;
 using pageObject.Core.Wrappers;
 
@@ -6,7 +7,7 @@ namespace pageObject.Pages;
 
 public class AddProjectPage : BasePage
 {
-    private static string END_POINT = "/index.php?/admin/projects/add/1";
+    private const string Endpoint = "/index.php?/admin/projects/add/1";
 
     private UIElement NameProjectInput => new(Driver, By.Id("name"));
     private UIElement AnnouncementInput => new(Driver, By.Id("announcement"));
@@ -24,9 +25,10 @@ public class AddProjectPage : BasePage
 
     protected override void OpenPage()
     {
-        Driver.Navigate().GoToUrl(BaseTest.BaseURL + END_POINT);
+        Driver.Navigate().GoToUrl(BaseTest.BaseURL + Endpoint);
     }
-
+    
+    [AllureStep("Add new project, name - '{0}', announcement - '{1}', checkbox - '{2}', radio value - '{3}'")]
     public void AddNewProject(string nameProject, string announcement, bool checkbox, int radioValue)
     {
         NameProjectInput.SendKeys(nameProject);

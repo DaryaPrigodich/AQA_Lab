@@ -6,8 +6,8 @@ namespace pageObject.Pages;
 
 public class SuccessfullyAddedProjectPage : BasePage
 {
-    private static string END_POINT = "/index.php?/admin/projects/overview"; 
-    
+    private const string Endpoint = "/index.php?/admin/projects/overview";
+
     private UIElement MessageSuccess => new(Driver, By.XPath("//*[@id='content-inner']/child::*[contains(@class,'message-success')]"));
 
     public SuccessfullyAddedProjectPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
@@ -20,7 +20,7 @@ public class SuccessfullyAddedProjectPage : BasePage
     
     protected override void OpenPage()
     {
-        Driver.Navigate().GoToUrl(BaseTest.BaseURL + END_POINT);
+        Driver.Navigate().GoToUrl(BaseTest.BaseURL + Endpoint);
     }
 
     public bool IsPageOpened()

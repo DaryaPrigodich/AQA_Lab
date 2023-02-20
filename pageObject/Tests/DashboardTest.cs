@@ -1,59 +1,84 @@
-﻿using pageObject.BaseEntities;
+﻿using Allure.Commons;
+using FluentAssertions;
+using NUnit.Allure.Attributes;
+using NUnit.Allure.Core;
+using pageObject.BaseEntities;
 using pageObject.Pages;
+using pageObject.Services;
 
 namespace pageObject;
 
+[TestFixture]
+[AllureNUnit]
 public class DashboardTest : BaseTest
 {
     [SetUp]
     public void Setup()
     {
         var loginPage = new LoginPage(Driver, true);
-        loginPage.Login();
+        loginPage.Login(Configurator.Username, Configurator.Password);
     }
 
     [Test]
-    [SmokeTest]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Add project")]
     public void AddProjectButtonTest()
     {
         var dashboardPage = new DashboardPage(Driver);
         dashboardPage.ClickAddProjectButton();
-
-        Assert.AreEqual(Driver.Title, "Add Project - TestRail", "Button isn't clickable.");
+        Driver.Title.Should().Be("Add Project - TestRail", "Button isn't clickable.");
     }
 
     [Test]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Dropdown menu")]
     public void ChooseOptionByIndexTest()
     {
         var dashboardPage = new DashboardPage(Driver);
         dashboardPage.ChooseHelpMenuOptionByIndex(3);
-        Assert.AreEqual(2, Driver.WindowHandles.Count, "Option page wasn't open.");
+        Driver.WindowHandles.Count.Should().Be(2,"Option page wasn't open.");
     }
 
     [Test]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Dropdown menu")]
     public void ChooseOptionByValueTest()
     {
         var dashboardPage = new DashboardPage(Driver);
         dashboardPage.ChooseUserMenuOptionByValue("My Settings");
-        Assert.AreEqual(Driver.Title, "My Settings - TestRail", "Option page wasn't open.");
+        Driver.Title.Should().Be("My Settings - TestRail","Option page wasn't open.");
     }
 
     [Test]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Dropdown menu")]
     public void CountDropDownOptionsTest()
     {
         var dashboardPage = new DashboardPage(Driver);
         var countUserMenuOptions = dashboardPage.GetCountUserMenuOptions();
-        Assert.AreEqual(2,countUserMenuOptions, "Wrong number of options.");
+        countUserMenuOptions.Should().Be(2,"Wrong number of options.");
         
         var countHelpMenuOptions = dashboardPage.GetCountHelpMenuOptions();
-        Assert.AreEqual(9,countHelpMenuOptions);
+        countHelpMenuOptions.Should().Be(9,"Wrong number of options.");
     }
 
     [Test]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Dropdown menu")]
     public void OptionTextTest()
     {
         var dashboardPage = new DashboardPage(Driver);
         var optionText = dashboardPage.GetOptionTextHelpMenu(3);
-        Assert.IsTrue(optionText.Contains("Keyboard Shortcuts"), "Invalid option text.");
+        optionText.Should().Contain("Keyboard Shortcuts","Invalid option text.");
     }
 }
