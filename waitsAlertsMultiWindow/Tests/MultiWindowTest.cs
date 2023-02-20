@@ -8,12 +8,12 @@ public class MultiWindow : BaseTest
     [Test]
     public void MultiWindowTest()
     {
-        var tvCatalogPage = new TVCatalogPage(Driver, true);
-        tvCatalogPage.VKButton.Click();
+        var tvCatalogPage = new TvCatalogPage(Driver, true);
+        tvCatalogPage.VkButton.Click();
         var windowHandles = Driver.WindowHandles;
         tvCatalogPage.SwitchToPage(windowHandles[1]);
         
-        Assert.AreEqual("onlíner | ВКонтакте", Driver.Title);
+        Assert.IsTrue(new VkPage(Driver).IsPageOpened(), "VK Page wasn't open.");
         
         Driver.Close();
         tvCatalogPage.SwitchToPage(windowHandles[0]);
@@ -22,7 +22,7 @@ public class MultiWindow : BaseTest
         tvCatalogPage.SwitchToPage(windowHandles[1]);
         var twitterPage = new TwitterPage(Driver);
         
-        Assert.IsTrue(twitterPage.SignUpButton.Displayed);
+        Assert.IsTrue(twitterPage.SignUpButton.Displayed, "Twitter Page wasn't open.");
         
         Driver.Close();
         tvCatalogPage.SwitchToPage(windowHandles[0]);
@@ -30,6 +30,6 @@ public class MultiWindow : BaseTest
         windowHandles = Driver.WindowHandles;
         tvCatalogPage.SwitchToPage(windowHandles[1]);
         
-        Assert.AreEqual(2,windowHandles.Count);
+        Assert.AreEqual(2,windowHandles.Count, "Wrong number of open windows.");
     }
 }

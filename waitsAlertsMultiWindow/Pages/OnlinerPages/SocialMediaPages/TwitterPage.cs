@@ -6,35 +6,22 @@ namespace waitsAlertsMultiWindow.Pages;
 
 public class TwitterPage : BasePage
 {
-    private static string END_POINT = "/OnlinerBY";
+    private const string EndPoint = "/OnlinerBY";
 
     private static readonly By SignUpButtonBy = By.XPath("//span[text()='Зарегистрироваться']");
      
     public IWebElement SignUpButton => Driver.FindElement(SignUpButtonBy);
     
-    public TwitterPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
+    public TwitterPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
     {
     }
 
-    public TwitterPage(IWebDriver _driver) : base(_driver, false)
+    public TwitterPage(IWebDriver driver) : base(driver, false)
     {
     }
 
     protected override void OpenPage()
     {
-        Driver.Navigate().GoToUrl(Configurator.BaseTwitterURL + END_POINT);
+        Driver.Navigate().GoToUrl(Configurator.BaseTwitterUrl + EndPoint);
     }
-
-    protected override bool IsPageOpened()
-    {
-        try
-        {
-            return SignUpButton.Displayed;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
-
 }

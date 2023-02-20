@@ -6,26 +6,24 @@ namespace waitsAlertsMultiWindow.Pages;
 
 public class VkPage : BasePage
 {
-    private static string END_POINT = "/onliner";
+    private const string Endpoint = "/onliner";
+    
+    private IWebElement SignInButton => Driver.FindElement(By.XPath("//button[contains(@data-action,'sign_in')]"));
 
-    private static readonly By SignInButtonBy = By.XPath("//button[contains(@data-action,'sign_in')]");
-
-    private IWebElement SignInButton => Driver.FindElement(SignInButtonBy);
-
-    public VkPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
+    public VkPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
     {
     }
 
-    public VkPage(IWebDriver _driver) : base(_driver, false)
+    public VkPage(IWebDriver driver) : base(driver, false)
     {
     }
 
     protected override void OpenPage()
     {
-        Driver.Navigate().GoToUrl(Configurator.BaseVkURL + END_POINT);
+        Driver.Navigate().GoToUrl(Configurator.BaseVkUrl + Endpoint);
     }
 
-    protected override bool IsPageOpened()
+    public bool IsPageOpened()
     {
         try
         {

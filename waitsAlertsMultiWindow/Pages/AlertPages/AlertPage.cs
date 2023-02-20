@@ -6,41 +6,24 @@ namespace waitsAlertsMultiWindow.Pages.AlertPages;
 
 public class AlertPage : BasePage
 {
-    private static string END_POINT = "/alerts";
-    
-    private static readonly By SimpleAlertButtonBy = By.Id("alertButton");
-    private static readonly By ConfirmationAlertButtonBy = By.Id("confirmButton");
-    private static readonly By PromptAlertButtonBy = By.Id("promtButton");
-    private static readonly By ConfirmationAlertMessageBy = By.Id("confirmResult");
-    private static readonly By PromptAlertMessageBy = By.Id("promptResult");
+    private const string Endpoint = "/alerts";
 
-    private IWebElement SimpleAlertButton => Driver.FindElement(SimpleAlertButtonBy);
-    private IWebElement ConfirmationAlertButton => Driver.FindElement(ConfirmationAlertButtonBy);
-    private IWebElement PromptAlertButton => Driver.FindElement(PromptAlertButtonBy);
+    private IWebElement SimpleAlertButton => Driver.FindElement(By.Id("alertButton"));
+    private IWebElement ConfirmationAlertButton => Driver.FindElement(By.Id("confirmButton"));
+    private IWebElement PromptAlertButton => Driver.FindElement(By.Id("promtButton"));
 
-    private IWebElement ConfirmationAlertMessage => _waitService.GetVisibleElement(ConfirmationAlertMessageBy);
-    private IWebElement PromptAlertMessage => _waitService.GetVisibleElement(PromptAlertMessageBy);
+    private IWebElement ConfirmationAlertMessage => WaitService.GetVisibleElement(By.Id("confirmResult"));
+    private IWebElement PromptAlertMessage => WaitService.GetVisibleElement(By.Id("promptResult"));
 
-    public AlertPage(IWebDriver _driver, bool openPageByUrl) : base(_driver, openPageByUrl)
+    public AlertPage(IWebDriver driver, bool openPageByUrl) : base(driver, openPageByUrl)
     {
     }
 
     protected override void OpenPage()
     {
-        Driver.Navigate().GoToUrl(Configurator.BaseAlertURL + END_POINT); 
+        Driver.Navigate().GoToUrl(Configurator.BaseAlertUrl + Endpoint); 
     }
 
-    protected override bool IsPageOpened()
-    {
-        try
-        {
-            return SimpleAlertButton.Displayed;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }    }
-    
     public IAlert ShowSimpleAlert()
     {
         SimpleAlertButton.Click();
@@ -64,9 +47,9 @@ public class AlertPage : BasePage
         return ConfirmationAlertMessage;
     }
     
-    public IWebElement DismissConfirmationAlert(IAlert confirmationAlert_2)
+    public IWebElement DismissConfirmationAlert(IAlert confirmationAlert)
     {
-        confirmationAlert_2.Dismiss();
+        confirmationAlert.Dismiss();
         return ConfirmationAlertMessage;
     }
     

@@ -6,48 +6,25 @@ namespace waitsAlertsMultiWindow.Pages;
 
 public class ComparisonPage : BasePage
 {
-    private static readonly By ComparedTVBy = By.XPath("//*[contains(@class,'product-table__row_top')]");
-    private static readonly By ScreenDiagonalFieldBy = By.XPath("//*[text()='Диагональ экрана']");
-    private static readonly By ScreenDiagonalTipButtonBy = By.XPath("//*[@data-tip-term='Диагональ экрана']");
-    private static readonly By DeleteFirstTVButtonBy =
-        By.XPath("(//*[@class='product-summary']/following-sibling::a)[1]");
-    private static readonly By TVInformationBy =
-        By.XPath("//*[@class='product-summary']//a[@class='product-summary__figure']");
-    private static readonly By ScreenDiagonalTipDataBy = By.XPath("//*[@class='product-table-tip__text']");
+    private IWebElement ScreenDiagonalField => Driver.FindElement(By.XPath("//*[text()='Диагональ экрана']"));
+    private IWebElement DeleteFirstTvButton => Driver.FindElement(By.XPath("(//*[@class='product-summary']/following-sibling::a)[1]"));
+    public List<IWebElement> TvInformation => new(Driver.FindElements(By.XPath("//*[@class='product-summary']//a[@class='product-summary__figure']")));
 
-    private IWebElement ComparedTV => Driver.FindElement(ComparedTVBy);
-    private IWebElement ScreenDiagonalField => Driver.FindElement(ScreenDiagonalFieldBy);
-    private IWebElement DeleteFirstTVButton => Driver.FindElement(DeleteFirstTVButtonBy);
-    public List<IWebElement> TVInformation => new(Driver.FindElements(TVInformationBy));
+    private IWebElement ScreenDiagonalTipButton => WaitService.GetVisibleElement(By.XPath("//*[@data-tip-term='Диагональ экрана']"));
+    private bool ScreenDiagonalTipData => WaitService.IsElementInVisible(By.XPath("//*[@class='product-table-tip__text']"));
 
-    private IWebElement ScreenDiagonalTipButton => _waitService.GetVisibleElement(ScreenDiagonalTipButtonBy);
-    private bool ScreenDiagonalTipData => _waitService.IsElementInVisible(ScreenDiagonalTipDataBy);
-
-    public ComparisonPage(IWebDriver _driver) : base(_driver, false)
+    public ComparisonPage(IWebDriver driver) : base(driver, false)
     {
     }
 
     protected override void OpenPage()
     {
     }
-
-    protected override bool IsPageOpened()
-    {
-        try
-        {
-            return ComparedTV.Displayed;
-        }
-        catch (Exception e)
-        {
-            return false;
-        }
-    }
     
     public void ShowScreenDiagonalTip()
     {
         var actions = new Actions(Driver);
         actions.MoveToElement(ScreenDiagonalField).Perform();
-        
         ScreenDiagonalTipButton.Click();
     }
     
@@ -59,6 +36,6 @@ public class ComparisonPage : BasePage
     
     public void DeleteFirstTv()
     {
-        DeleteFirstTVButton.Click();
+        DeleteFirstTvButton.Click();
     }
 }

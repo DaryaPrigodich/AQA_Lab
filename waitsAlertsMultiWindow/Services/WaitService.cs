@@ -6,37 +6,23 @@ namespace waitsAlertsMultiWindow.Services;
 
 public class WaitService
 {
-    [ThreadStatic] protected static IWebDriver _driver;
+    [ThreadStatic] protected static IWebDriver Driver;
 
     private readonly WebDriverWait _waitService;
 
     public WaitService(IWebDriver driver)
     {
-        _driver = driver;
-        _waitService = new WebDriverWait(_driver, TimeSpan.FromSeconds(Configurator.WaitTimeout));
+        Driver = driver;
+        _waitService = new WebDriverWait(Driver, TimeSpan.FromSeconds(Configurator.WaitTimeout));
     }
 
     public IWebElement GetVisibleElement(By by)
     {
-        try
-        {
-            return _waitService.Until(ExpectedConditions.ElementIsVisible(by));
-        }
-        catch (Exception e)
-        {
-            throw new AssertionException(e.Message);
-        }
+        return _waitService.Until(ExpectedConditions.ElementIsVisible(by));
     }
 
     public bool IsElementInVisible(By by)
     {
-        try
-        {
-            return _waitService.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
-        }
-        catch (Exception e)
-        {
-            throw new AssertionException(e.Message);
-        }
+        return _waitService.Until(ExpectedConditions.InvisibilityOfElementLocated(by));
     }
 }
