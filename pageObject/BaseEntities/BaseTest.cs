@@ -11,7 +11,6 @@ public class BaseTest
     public static string BaseURL = Configurator.BaseURL;
     protected Project Project;
 
-    [ThreadStatic] 
     protected static IWebDriver Driver;
 
     [OneTimeSetUp]

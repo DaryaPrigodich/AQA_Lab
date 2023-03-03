@@ -51,12 +51,12 @@ public class DashboardPage : BasePage
     [AllureStep("Click to HelpMenu dropdown option with index {0}")]
     public void ChooseHelpMenuOptionByIndex(int optionIndex)
     {
-        HelpMenu.ChooseOptionByIndex(Dropdown.helpDropdown, optionIndex);
+        HelpMenu.ChooseOptionByIndex(Dropdown.HelpDropdown, optionIndex);
     }
     
     [AllureStep("Click to HelpMenu dropdown option with value {0}")]
     public void ChooseUserMenuOptionByValue(string optionValue)
     {
-        UserMenu.ChooseOptionByValue(Dropdown.userDropdown, optionValue);
+        UserMenu.ChooseOptionByValue(Dropdown.UserDropdown, optionValue);
     }
 }
