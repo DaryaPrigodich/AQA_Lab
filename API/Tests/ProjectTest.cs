@@ -1,7 +1,9 @@
 using System.Net;
+using Allure.Commons;
 using API.Fakers;
 using API.Models;
 using FluentAssertions;
+using NUnit.Allure.Attributes;
 using NUnit.Framework;
 
 namespace API.Tests;
@@ -12,6 +14,10 @@ public class ProjectTest : BaseTest
 
     [Test]
     [Order(1)]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Add Project")]
     public void AddProjectTest()
     {
         _project = new ProjectFaker().Generate();
@@ -22,6 +28,10 @@ public class ProjectTest : BaseTest
 
     [Test]
     [Order(2)]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Get Project")]
     public void GetProjectTest()
     {
         var currentProject = ProjectService.GetProject(_project.Id.ToString()).Result;
@@ -30,6 +40,10 @@ public class ProjectTest : BaseTest
 
     [Test]
     [Order(3)]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Get Projects")]
     public void GetProjectsTest()
     {
         var projects = ProjectService.GetProjects().Result;
@@ -38,6 +52,10 @@ public class ProjectTest : BaseTest
     
     [Test]
     [Order(4)]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Update Project")]
     public void UpdateProjectsTest()
     {
         var project = new ProjectFaker().Generate();
@@ -51,6 +69,10 @@ public class ProjectTest : BaseTest
 
     [Test]
     [Order(5)]
+    [AllureTag("Smoke")]
+    [AllureSeverity(SeverityLevel.critical)]
+    [AllureOwner("Darya")]
+    [AllureSuite("Delete Project")]
     public void DeleteProjectsTest()
     {
         var statusCode = ProjectService.DeleteProject(_project.Id.ToString());
