@@ -1,0 +1,71 @@
+############################
+# Non important C# Scripts #
+############################
+scrap_code.cs
+
+############################
+#    User-specific files   #
+############################
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+############################
+#      Build results       #
+############################
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+.idea/
+
+############################
+#  Visual C/C# cache files  #
+############################
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.ide*
+.vs/
+
+
+############################
+#  	  Grafana   	   #
+############################
+IntegrationTools/
+
+
+############################
+#  	  Packages 	   #
+############################
+packages/
+LoadTesting/load_testing/
+LoadTesting/LoadTesting/docs/
+LoadTesting/LoadTesting/__pycache__/
+
+############################
+#  	  Archive	   #
+############################
+Archive/
+
+############################
+#  	    Logs	   #
+############################
+LoadTesting/LoadTesting/Logs/
+Scripts/logs/
+
+############################
+#  	   Misc 	   #
+############################
+ThinkSmartQA.sln.DotSettings.user
+Pages/obj/Debug/Pages.csproj.CoreCompileInputs.cache
+Utilities/obj/Debug/Utilities.csproj.CoreCompileInputs.cache
+*.cache
+WorkflowTests/App.config
+Utilities/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+Scripts/jsonfiles/*.json
