@@ -1,6 +1,7 @@
 using API.Clients;
 using API.Models.Enum;
 using API.Services;
+using NUnit.Framework;
 
 namespace API.Tests;
 

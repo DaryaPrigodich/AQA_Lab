@@ -2,6 +2,7 @@ using System.Net;
 using API.Fakers;
 using API.Models;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace API.Tests;
 
