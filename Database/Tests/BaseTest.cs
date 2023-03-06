@@ -1,6 +1,7 @@
 ﻿using Database.Clients;
 using Database.Models.Enum;
 using Database.Services;
+using NUnit.Framework;
 
 namespace Database.Tests;
 

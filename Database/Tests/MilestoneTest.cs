@@ -2,6 +2,7 @@
 using Database.Models;
 using Database.Services;
 using FluentAssertions;
+using NUnit.Framework;
 
 namespace Database.Tests;
 
