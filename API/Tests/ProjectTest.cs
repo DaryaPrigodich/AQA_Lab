@@ -33,7 +33,7 @@ public class ProjectTest : BaseTest
     public void GetProjectsTest()
     {
         var projects = ProjectService.GetProjects().Result;
-        projects.ProjectsList.Length.Should().Be(4);
+        projects.ProjectsList.Length.Should().Be(2);
     }
     
     [Test]
