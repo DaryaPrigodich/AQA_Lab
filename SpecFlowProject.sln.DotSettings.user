@@ -1,0 +1,15 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6c2c8f6e_002D9f31_002D4266_002Dbcd9_002D65e22aa68764/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GherkinFeature" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B2B00CDE-901D-4D43-A855-03F996D284A0::net6.0::SpecFlowProject.Features.GherkinFeature&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B2B00CDE-901D-4D43-A855-03F996D284A0::net6.0::SpecFlowProject.Features.MilestoneTestUIFeature.AddNewMilestone&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B2B00CDE-901D-4D43-A855-03F996D284A0::net6.0::SpecFlowProject.Features.MilestoneTestUIFeature&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B2B00CDE-901D-4D43-A855-03F996D284A0::net6.0::SpecFlowProject.Features.MilestoneTestAPIFeature&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=fc6fb361_002Da21f_002D4fb0_002D9d97_002D93e4bfa0f425/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="APITestMilestone" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B2B00CDE-901D-4D43-A855-03F996D284A0::net6.0::SpecFlowProject.Features.MilestoneTestAPIFeature.APITestMilestone&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::B2B00CDE-901D-4D43-A855-03F996D284A0::net6.0::SpecFlowProject.Features.MilestoneTestUIFeature&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
