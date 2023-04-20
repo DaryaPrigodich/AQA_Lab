@@ -1,19 +1,19 @@
 # Task:
-1. Необходимо создать некоторых пользователей:
+1. You need to create users:
 
-   - Candidate(находится в поиске работы) - Guid Id, имя, фамилия, желаемая должность, краткое описание должности, заработная плата.
+   - Candidate(looking for a job) - Guid Id, first name, last name, desired position, brief description of the position, salary.
    
-   - Employee(занимает какую-либо должность в какой-либо компании) - Guid Id, имя, фамилия, должность, краткое описание должности, заработная плата; компания в которой работает, страна, город и физический адрес компании.
+   - Employee(holds any position in any company) - Guid Id, first name, last name, position, brief description of the position, salary; company they work, country, city and physical address of the company.
 
-2. Создать и реализовать интерфейс, который будет содержать метод, выводящий в консоли данные о пользователе.
-   Пример:
+2. Create and implement an interface that will contain a method that outputs user data to the console.
+   Example:
    
    - "Hello, I am {FullName} I want to be a {JobTittle}({JobDescriptor}) with a salary from {JobSalary}."
    
    - "Hello, I am {FullName}, {JobTittle} in {CompanyName}({CompanyCountry}), {CompanyCity}, {CompanyStreet} and my salary {JobSalary}."
 
-3. Заполнить все данные о пользователях и компании используя библиотеку **Bogus**.
+3. Fill in all data about users and companies using the library **Bogus**.
 
-4. Реализовать создание рандомного количества Candidate, Employee.
+4. Implement the creation of a random quantity Candidate, Employee.
 
-5. Создать класс UserFactory, который в зависимости от типа пользователя (Candidate, Employee) будет возвращать необходимый объект.
+5. Create a class UserFactory, which depends on the type of user (Candidate, Employee) will return the required object.
